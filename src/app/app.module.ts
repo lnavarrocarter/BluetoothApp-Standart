@@ -11,6 +11,8 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 import { BLE } from '@ionic-native/ble';
 import { BluetoothSerial } from '@ionic-native/bluetooth-serial';
 import { BufferarrayProvider } from '../providers/bufferarray/bufferarray';
+import { StorageProvider } from '../providers/storage/storage';
+import { SQLite } from '@ionic-native/sqlite';
 
 
 @NgModule({
@@ -35,7 +37,9 @@ import { BufferarrayProvider } from '../providers/bufferarray/bufferarray';
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     BLE,
     BluetoothSerial,
-    BufferarrayProvider
+    BufferarrayProvider,
+    StorageProvider,
+    SQLite
   ]
 })
 export class AppModule {}

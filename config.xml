@@ -93,5 +93,7 @@
     <allow-navigation href="http://192.168.5.66:8100" />
     <plugin name="cordova-plugin-statusbar" spec="^2.4.1" />
     <plugin name="com-badrit-base64" spec="^0.2.0" />
+    <allow-navigation href="http://192.168.5.142:8100" />
+    <plugin name="cordova-sqlite-storage" spec="^2.3.1" />
     <plugin name="cordova-plugin-bluetooth-serial" spec="^0.4.7" />
 </widget>

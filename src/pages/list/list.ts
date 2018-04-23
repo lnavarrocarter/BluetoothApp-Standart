@@ -2,7 +2,9 @@ import { Component, NgZone } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 import { ToastController } from 'ionic-angular';
 import { BLE } from '@ionic-native/ble';
-import { BufferarrayProvider } from '../../providers/bufferarray/bufferarray'
+import { BluetoothSerial } from '@ionic-native/bluetooth-serial';
+import { BufferarrayProvider } from '../../providers/bufferarray/bufferarray';
+import { StorageProvider } from '../../providers/storage/storage';
 
 // SmartBand Service UUIDs
 const SMARTBAND_SERVICE = '1800';
@@ -30,6 +32,8 @@ export class ListPage {
     public navParams: NavParams, 
     private ble: BLE,
     private toastCtrl: ToastController,
+    private bluetoothSerial: BluetoothSerial,
+    public storageServices : StorageProvider,
     private ngZone: NgZone,
     private BufferServices : BufferarrayProvider
   ){
@@ -43,6 +47,7 @@ export class ListPage {
 
   onConnected(peripheral) {
     console.log('Connected to ' + peripheral.name + ' ' + peripheral.id);
+    this.printBuffer(peripheral.advertising,'periperal')
     console.log(peripheral);
     this.connected = true;
     this.ngZone.run(() => {
@@ -60,11 +65,11 @@ export class ListPage {
               this.bleNotify(peripheral.id,carasteristica.service,carasteristica.characteristic);
             break;
             case 'WriteWithoutResponse':
-              var msgArray = new Uint16Array([1]);
+              var msgArray = new Uint8Array([1,1,1,1]);
               this.bleWithoutResponse(peripheral.id,carasteristica.service,carasteristica.characteristic,msgArray)
             break;
             case 'Write':
-              var msgArray = new Uint16Array([1]);
+              var msgArray = new Uint8Array([1,1,1,1]);
               this.bleWrite(peripheral.id,carasteristica.service,carasteristica.characteristic,msgArray)
             break;
             case 'Notify':
@@ -127,15 +132,16 @@ export class ListPage {
     console.log(type);
     console.log(buffer)
     let data = new Uint8Array(buffer);
-    let blob = new Blob([data], {type: "archivo application / octet-binario"});
+    let blob = new Blob([data], {type: "application/octet-stream"});
     let reader = new FileReader();
     reader.readAsText(blob);
     this.ngZone.run(() => {
       
     });
     reader.onload = function (e){
-      console.info(reader.result);
+      console.log(reader.result);
     }
   }
+
 
 }

@@ -1,6 +1,7 @@
 import { BLE } from '@ionic-native/ble';
 import { Component, NgZone } from '@angular/core';
 import { NavController, AlertController } from 'ionic-angular';
+import { StorageProvider } from '../../providers/storage/storage';
 
 import { ListPage } from '../list/list';
 
@@ -16,12 +17,14 @@ export class HomePage {
   constructor(public navCtrl: NavController, 
               private ble: BLE,
               private alertCtrl: AlertController,
+              public storageServices : StorageProvider,
               private ngZone: NgZone) { 
   }
 
   ionViewDidEnter() {
     console.log('ionViewDidEnter');
     this.scan();
+    this.storageServices.onCreateSQL();
   }
 
   scan() {
@@ -30,26 +33,25 @@ export class HomePage {
       device => this.onDiscoveredDevice(device), 
       e => this.showAlert('Scan Failed', 'Error scanning for BLE devices.')
     );
-
     console.log('Scanning for Bluetooth LE Devices');
   }
 
   onDiscoveredDevice(device) {
-    console.log('Discovered ' + JSON.stringify(device, null, 2));
+    //console.log('Discovered ' + JSON.stringify(device, null, 2));
     this.ngZone.run(() => {
       this.devices.push(device);
     });
   }
 
   deviceSelected(device) {
-    console.log(JSON.stringify(device) + ' selected');
+    //console.log(JSON.stringify(device) + ' selected');
     this.navCtrl.push(ListPage, {
       device: device
     });
   }
 
   setStatus(message) {
-    console.log(message);
+    //console.log(message);
     this.ngZone.run(() => {
       this.statusMessage = message;
     });

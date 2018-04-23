@@ -9,6 +9,9 @@
 <ion-content class="padding">
 
   <ion-item *ngIf="connected">
-    <button ion-button (click)="disconnect();">Disconnect</button>
+    <button ion-button (click)="onDeviceDisconnected(peripheral);">Disconnect</button>
+  </ion-item>
+  <ion-item *ngIf="connected">
+    <button ion-button (click)="onConnected(peripheral);">Refresh</button>
   </ion-item>
 </ion-content>
