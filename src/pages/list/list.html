@@ -1,0 +1,14 @@
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>{{ peripheral.name || 'Device' }}</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+<ion-content class="padding">
+
+  <ion-item *ngIf="connected">
+    <button ion-button (click)="disconnect();">Disconnect</button>
+  </ion-item>
+</ion-content>
